@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Lock } from "lucide-react";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   name: z
@@ -38,7 +38,7 @@ export function LoginForm() {
       console.log("Login feito com sucesso:", response.data);
       setIsAceppted(`Olá ${name}! Bem-vindo à plataforma.`);
       setTimeout(() => {
-        navigate("/Home")
+        navigate("/home")
       }, 2000)
     } catch (error) {
       console.error("Erro na requisição POST:", error);
@@ -96,7 +96,7 @@ export function LoginForm() {
               {isLoading ? "Carregando..." : "Entrar"}
             </button>
             <button className="w-full cursor-pointer bg-[#F5F5F5] rounded-lg text-[#1b1b1b] font-semibold border-1 border-[#D9D9D9] py-2">
-              <a href="/register">Cadastrar-se</a>
+              <Link to="/register">Cadastrar-se</Link>
             </button>
             <p className="text-green-500 text-sm text-center">{isAceppted}</p>
           </div>
