@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Lock, Mail, Phone } from "lucide-react";
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ export function RegisterForm() {
       setIsCreated(`Parabéns ${name}, obrigado por escolher a nossa plataforma!`);
 
       setTimeout(() => {
-        navigate("/login");
+        navigate("/");
       }, 2000);
     } catch (error) {
       console.error("Erro na requisição da API", error);
@@ -68,7 +68,7 @@ export function RegisterForm() {
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
-      <div className="bg-white rounded-xl shadow-md w-full max-w-md p-8 border border-gray-200">
+      <div className="bg-white rounded-xl shadow-md w-full max-w-md p-8 border border-[#D9D9D9]">
         <h1 className="text-3xl font-semibold text-gray-800">Cadastre-se</h1>
         <p className="text-sm text-gray-500 mt-1">
           Preencha os campos abaixo para se cadastrar na plataforma.

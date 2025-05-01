@@ -48,7 +48,7 @@ export function LoginForm() {
 
   return (
     <div className="p-8 md:p-0">
-      <div className="bg-white w-full lg:w-[487px] p-8 rounded-xl border-1 border-[#D9D9D9] mt-32">
+      <div className="bg-white w-full lg:w-[487px] p-8 rounded-xl border-1 border-[#D9D9D9] shadow-md mt-32">
         <div className="text-start flex flex-col gap-2">
           <h1 className="text-[#1b1b1b] font-semibold text-3xl">Log in</h1>
           <p className="text-black/50 text-start text-sm">
