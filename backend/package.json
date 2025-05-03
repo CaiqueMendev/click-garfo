@@ -1,0 +1,27 @@
+{
+  "name": "click-garfo",
+  "version": "1.0.0",
+  "description": "Click&Garfo é um aplicativo de delivery de comida que oferece uma experiência eficiente para usuários realizarem pedidos de seus restaurantes favoritos. O sistema inclui funcionalidades como cadastro e login de usuários, CRUD de restaurantes e pedidos, categorização de pedidos e avaliações de restaurantes.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "frontend": "npm run dev",
+    "backend": "npm run dev",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaiqueMendev/click-garfo.git"
+  },
+  "author": "Caique Oliveira, José Felipe e Gustavo Gantois",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaiqueMendev/click-garfo/issues"
+  },
+  "homepage": "https://github.com/CaiqueMendev/click-garfo#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  }
+}
