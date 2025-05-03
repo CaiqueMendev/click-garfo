@@ -67,7 +67,7 @@ export function RegisterForm() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
+    <section className="min-h-screen flex items-center justify-center px-4 py-8">
       <div className="bg-white rounded-xl shadow-md w-full max-w-md p-8 border border-[#D9D9D9]">
         <h1 className="text-3xl font-semibold text-gray-800">Cadastre-se</h1>
         <p className="text-sm text-gray-500 mt-1">
