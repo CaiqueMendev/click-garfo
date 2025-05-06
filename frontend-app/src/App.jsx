@@ -3,6 +3,7 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import Home from "./pages/platform/home"
 import { MainLayout } from "./pages/platform/main"
+import Restaurants from "./pages/platform/restaurants"
 
 function App() {
 
@@ -17,6 +18,11 @@ function App() {
               <Home />
             </MainLayout>
           } />
+          <Route path="/restaurants" element={
+          <MainLayout>
+            <Restaurants />
+          </MainLayout>
+        } />
         </Routes>
       </BrowserRouter>
     </>

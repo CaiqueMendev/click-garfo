@@ -3,7 +3,7 @@ import { useState } from "react";
 
 
 export function Header() {
-    const [openSheetCart, setOpenSheetCart] = useState(false);
+    const [/*openSheetCart*/, setOpenSheetCart] = useState(false);
 
     function searchProducts(event) {
         const value = event.target.value;

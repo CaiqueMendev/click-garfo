@@ -12,7 +12,7 @@ import { SalesOff } from "../../components/home/c-sales-off";
 
 export default function Home() {
   return (
-    <section className="relative">
+    <section className="relative mt-8 lg:mt-0">
       <div className="max-w-[1500px] mx-auto px-4 py-6 lg:px-2">
         <Header />
         <div className="w-full mt-6 gap-6 rounded-lg flex flex-col md:flex-row">
