@@ -1,6 +1,6 @@
 
 
-export function CardRequests({title, img, description, price, icon, like}) {
+export function   CardRequests({title, img, description, price, icon, like}) {
 
     function handleFavoriteFood(event) {
         const value = event.target.value;
@@ -12,7 +12,7 @@ export function CardRequests({title, img, description, price, icon, like}) {
   <div className="flex flex-col gap-4">
     <div className="relative">
       <div className="absolute top-4 bottom-0 right-4">
-        <button onClick={handleFavoriteFood} className="text-white font-medium">{like}</button>
+        <button onClick={handleFavoriteFood} className="text-[#E67E22] font-medium">{like}</button>
       </div>
       <img src={img} alt="Food Request Photo" className="w-full h-52 object-cover rounded-md" />
     </div>
