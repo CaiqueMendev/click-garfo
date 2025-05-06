@@ -23,7 +23,7 @@ export default function Home() {
             alt="Banner promocional"
           />
          </div>
-          <div className="max-h-64 md:w-full lg:w-1/2 overflow-y-auto pr-2 custom-scroller">
+          <div className="max-h-64 md:w-full lg:w-1/3 overflow-y-auto pr-2 custom-scroller">
             <h1 className="font-semibold text-2xl text-[#1B1B1B] mb-4">Conheça todas as ofertas na plataforma | <span className="font-bold text-[#E67E22]">50% OFF</span></h1>
             {dataSalesOff.map((item, index) => {
               return (
