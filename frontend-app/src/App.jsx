@@ -5,6 +5,7 @@ import Home from "./pages/platform/home"
 import { MainLayout } from "./pages/platform/main"
 import Restaurants from "./pages/platform/restaurants"
 import { CartOrder } from "./pages/platform/CartOrder"
+import MyFavorites from "./pages/platform/favorites"
 
 function App() {
 
@@ -29,6 +30,11 @@ function App() {
             <CartOrder />
           </MainLayout>
         } />
+        <Route path="/favorites" element={
+          <MainLayout>
+            <MyFavorites />
+          </MainLayout>
+        }/>
         </Routes>
       </BrowserRouter>
     </>

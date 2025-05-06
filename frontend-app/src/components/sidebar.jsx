@@ -102,7 +102,7 @@ export function Sidebar() {
                     to={item.href}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-r-2xl transition-colors ${
                       isActive
-                        ? "md:bg-[#E67E22]/20 text-[#1b1b1b] lg:w-40"
+                        ? "md:bg-[#E67E22]/20 text-[#1b1b1b] lg:w-42"
                         : "text-[#333] hover:text-[#E67E22]"
                     }`}
                   >
