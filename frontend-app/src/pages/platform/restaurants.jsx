@@ -1,10 +1,12 @@
 import { Heart, Star } from "lucide-react";
 import { CardRestaurant } from "../../components/restaurants/c-card-restaurant";
 import { dataRestaurantsFood } from "../../data/v-data";
+import { Header } from "../../components/restaurants/c-header";
 
 export default function Restaurants() {
     return (
-        <main className="max-w-[1500px] mx-auto px-4 py-6 lg:px-2">
+        <main className="max-w-[1400px] mx-auto px-4 py-6 lg:px-2 mt-8 lg:mt-0">
+          <Header />
          <div className="mb-8 mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
              {dataRestaurantsFood.map((item, index) => {
