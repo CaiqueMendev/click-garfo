@@ -4,6 +4,7 @@ import Register from "./pages/register"
 import Home from "./pages/platform/home"
 import { MainLayout } from "./pages/platform/main"
 import Restaurants from "./pages/platform/restaurants"
+import { CartOrder } from "./pages/platform/CartOrder"
 
 function App() {
 
@@ -21,6 +22,11 @@ function App() {
           <Route path="/restaurants" element={
           <MainLayout>
             <Restaurants />
+          </MainLayout>
+        } />
+        <Route path="/cart" element={
+          <MainLayout>
+            <CartOrder />
           </MainLayout>
         } />
         </Routes>
