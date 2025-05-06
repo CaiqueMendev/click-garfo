@@ -23,7 +23,7 @@ export default function Home() {
             alt="Banner promocional"
           />
          </div>
-          <div className="max-h-64 overflow-y-auto pr-2 custom-scroller">
+          <div className="max-h-64 md:w-full lg:w-1/2 overflow-y-auto pr-2 custom-scroller">
             <h1 className="font-semibold text-2xl text-[#1B1B1B] mb-4">Conheça todas as ofertas na plataforma | <span className="font-bold text-[#E67E22]">50% OFF</span></h1>
             {dataSalesOff.map((item, index) => {
               return (
@@ -42,8 +42,13 @@ export default function Home() {
             spaceBetween={12}
             slidesPerView={1}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
+              320: { slidesPerView: 2 },    
+              480: { slidesPerView: 3 },     
+              640: { slidesPerView: 4 },  
+              768: { slidesPerView: 5 },    
+              1024: { slidesPerView: 6 },    
+              1280: { slidesPerView: 7 },  
+              1536: { slidesPerView: 8 },    
             }}
             modules={[Pagination]}
           >
