@@ -17,7 +17,7 @@ const routes = [
   { icon: ShoppingCart, route: "Meu carrinho", href: "/cart" },
   { icon: Box, route: "Meus favoritos", href: "/favorites" },
   { icon: User, route: "Perfil", href: "/profile" },
-  { icon: LogOut, route: "Sair", href: "/logout" },
+  { icon: LogOut, route: "Sair", href: "/ " },
 ];
 
 export function Sidebar() {
