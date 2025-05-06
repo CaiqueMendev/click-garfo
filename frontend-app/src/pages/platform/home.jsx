@@ -74,7 +74,7 @@ export default function Home() {
               {dataOrderFood.map((item, index) => {
                 return (
                   <SwiperSlide key={index}>
-                    <CardRequests like={<Heart size={24} />} img={item.img} title={item.title} description={item.description} price={item.price} icon={<ShoppingCart size={24} />} />
+                    <CardRequests like={<Heart size={36} />} img={item.img} title={item.title} description={item.description} price={item.price} icon={<ShoppingCart size={32} />} />
                   </SwiperSlide>
                 )
               })}

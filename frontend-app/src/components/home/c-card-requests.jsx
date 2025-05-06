@@ -11,7 +11,7 @@ export function CardRequests({title, img, description, price, icon, like}) {
         <div className="bg-white rounded-xl p-6">
   <div className="flex flex-col gap-4">
     <div className="relative">
-      <div className="absolute top-0 bottom-0 right-0">
+      <div className="absolute top-4 bottom-0 right-4">
         <button onClick={handleFavoriteFood} className="text-white font-medium">{like}</button>
       </div>
       <img src={img} alt="Food Request Photo" className="w-full h-52 object-cover rounded-md" />

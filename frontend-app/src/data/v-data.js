@@ -3,7 +3,7 @@ import { Heart, ShoppingCart } from "lucide-react";
 
 export const dataSalesOff = [
   {
-    img: "/FrenchFries.svg",
+    img: "/frenchFriesSales.svg",
     title: "Batata Frita Clássica com Ketchup",
     description: "Aquele sabor que nunca sai de moda! Porção generosa de batatas fritas crocantes por fora e macias por dentro, servidas com nosso ketchup especial"
   },
@@ -13,14 +13,14 @@ export const dataSalesOff = [
     description: "Uma explosão de sabor em cada mordida! Deliciosas batatas fritas em corte rústico, temperadas com nosso mix secreto de especiarias e acompanhadas de um potinho extra de ketchup artesanal. Perfeito para dividir... ou não!"
   },
   {
-    img: "/hamburguerLove.svg",
+    img: "/hamburguerLoveSales.svg",
     title: "Hamburguer Lovers – Porção Dupla",
-    description: "Para os verdadeiros fãs de batata frita: uma porção dupla bem servida, acompanhada de dois tipos de ketchup — o tradicional e o picante. Crocância, sabor e aquele toque apimentado que faz toda a diferença!"
+    description: "Dois hambúrgueres suculentos para quem não abre mão de um sabor marcante e generoso."
   },
   {
-    img: "/kidsLunch.svg",
+    img: "/kidsLunchSales.svg",
     title: "Prato Kids porção divertida",
-    description: "Para os verdadeiros fãs de batata frita: uma porção dupla bem servida, acompanhada de dois tipos de ketchup — o tradicional e o picante. Crocância, sabor e aquele toque apimentado que faz toda a diferença!"
+    description: "Uma refeição pensada para os pequenos: sabor, cor e diversão em cada mordida!"
   }
 ]
 
@@ -90,7 +90,7 @@ export const dataCategory = [
     },
     {
       like: Heart,
-      img: "/FritasSupremy.svg",
+      img: "/FritasSupreme.svg",
       title: "🍟 Fritas Supreme",
       description: "Batatas fritas temperadas com páprica, cobertas com cheddar derretido, bacon e cebolinha.",
       price: "R$ 20,90",
@@ -106,7 +106,7 @@ export const dataCategory = [
     },
     {
       like: Heart,
-      img: "/RefriGeladao.svg",
+      img: "/BigCombo.svg",
       title: "🍔 Big Combo",
       description: "Big combo acompanhado com hamburguer batata-frita molho especial e uma coca-cola de 2 litros.",
       price: "R$ 50,00",
