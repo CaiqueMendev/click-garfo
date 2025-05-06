@@ -5,7 +5,7 @@ export function PopularCategorys({ title, img }) {
           <img
             src={img}
             alt={title}
-            className="w-full h-32 object-cover rounded-lg"
+            className="w-24 h-24 object-fit rounded-lg"
           />
           <h2 className="text-[#1b1b1b] font-medium text-xl text-center transition-all duration-500 group-hover:text-white">
             {title}
