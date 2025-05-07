@@ -1,3 +1,4 @@
+import { PaymentForPixWebsite } from "../../components/cart-order/payment-website-pix";
 import { TableBuyOrder } from "../../components/cart-order/table-buy-order";
 
 export function CartOrder() {
@@ -11,9 +12,8 @@ export function CartOrder() {
             </article>
             <main>
                 <TableBuyOrder />
-                <div className="mt-8">
-                    <h1 className="text-xl text-[#E67E22] mb-0.5">Pague pelo site</h1>
-                    <div className="h-1 w-36 rounded-md bg-[#E67E22]"></div>
+                <div>
+                    <PaymentForPixWebsite />
                 </div>
             </main>
         </section>
