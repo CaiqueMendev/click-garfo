@@ -1,7 +1,7 @@
 import {
   Box,
   Home,
-  LogOut,
+  LogOut, 
   ShoppingCart,
   UtensilsCrossed,
   Menu,
