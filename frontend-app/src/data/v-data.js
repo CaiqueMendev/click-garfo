@@ -187,4 +187,31 @@ export const dataCategory = [
       description: " Sanduíches rápidos e leves, com ingredientes frescos e saudáveis. Ideal pra quem quer fast sem culpa.",
       btnText: "Ver restaurante"
     },
+  ];
+
+  export const dataMyCartOrder = [
+    {
+      img: "/hamburguer.svg",
+      food: "Hamburguer GG",
+      price: "R$ 29,90",
+      quantity: "6 unidades",
+      total: "R$ 180,00",
+      remove: "Cancelar"
+    },
+    {
+      img: "/pizza.svg",
+      food: "Pizza Calabresa",
+      price: "R$ 50,00",
+      quantity: "9 unidades",
+      total: "R$ 450,00",
+      remove: "Cancelar"
+    },
+    {
+      img: "/hotDog.svg",
+      food: "Hot Dog 2XG",
+      price: "R$ 20,90",
+      quantity: "2 unidades",
+      total: "R$ 42,00",
+      remove: "Cancelar"
+    }
   ]
