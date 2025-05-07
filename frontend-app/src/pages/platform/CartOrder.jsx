@@ -1,3 +1,4 @@
+import { FinalPaymentCartOrder } from "../../components/cart-order/final-payment-cart-order";
 import { PaymentForPixWebsite } from "../../components/cart-order/payment-website-pix";
 import { TableBuyOrder } from "../../components/cart-order/table-buy-order";
 
@@ -12,9 +13,8 @@ export function CartOrder() {
             </article>
             <main>
                 <TableBuyOrder />
-                <div>
-                    <PaymentForPixWebsite />
-                </div>
+                <PaymentForPixWebsite />
+                <FinalPaymentCartOrder />
             </main>
         </section>
     )

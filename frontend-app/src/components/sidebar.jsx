@@ -2,7 +2,6 @@ import {
   Box,
   Home,
   LogOut,
-  User,
   ShoppingCart,
   UtensilsCrossed,
   Menu,
@@ -16,7 +15,6 @@ const routes = [
   { icon: UtensilsCrossed, route: "Restaurantes", href: "/restaurants" },
   { icon: ShoppingCart, route: "Meu carrinho", href: "/cart" },
   { icon: Box, route: "Meus favoritos", href: "/favorites" },
-  { icon: User, route: "Perfil", href: "/profile" },
   { icon: LogOut, route: "Sair", href: "/ " },
 ];
 
