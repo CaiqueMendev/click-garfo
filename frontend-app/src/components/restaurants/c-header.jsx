@@ -13,7 +13,7 @@ export function Header() {
   return (
     <header className="max-w-[1400px] mx-auto">
         <div className="flex flex-col gap-2 text-start mb-4">
-        <h1 className="text-2xl font-semibold text-[#E67E22]">Restaurantes</h1>
+        <h1 className="text-2xl lg:text-3xl font-semibold text-[#E67E22]">Restaurantes</h1>
         <p className="text-gray-500 text-sm lg:text-base">
         Descubra os melhores restaurantes da região — sabores únicos, experiências inesquecíveis e opções para todos os gostos, do tradicional ao moderno, sem sair de casa.
         </p>

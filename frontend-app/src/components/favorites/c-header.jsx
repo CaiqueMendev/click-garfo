@@ -13,7 +13,7 @@ export function Header() {
   return (
     <header className="max-w-[1400px] mx-auto">
         <div className="flex flex-col gap-2 text-start mb-4">
-        <h1 className="text-2xl font-semibold text-[#E67E22]">Favoritos</h1>
+        <h1 className="text-2xl lg:text-3xl font-semibold text-[#E67E22]">Favoritos</h1>
         <p className="text-gray-500 text-sm lg:text-base">
         Aqui estão os pratos e restaurantes que conquistaram seu paladar! Com base no seu histórico de pedidos, reunimos tudo o que você mais pediu e favoritou para facilitar suas próximas escolhas. Rápido, prático e do jeitinho que você gosta.
         </p>
