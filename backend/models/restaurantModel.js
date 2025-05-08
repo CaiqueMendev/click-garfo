@@ -10,22 +10,67 @@ module.exports = {
     },
 
     create(restaurant, callback) {
-        const { name, category, adress, phone, cnpj } = restaurant;
-        const stmt = db.prepare("INSERT INTO restaurants (name, category, adress, phone, cnpj) VALUES (?, ?, ?, ?, ?)");
-        stmt.run([name, category, adress, phone, cnpj], function(err) {
+        const { name, phone, password, category_id } = restaurant;
+        const stmt = db.prepare("INSERT INTO restaurants (name, phone, password, category_id) VALUES (?, ?, ?, ?)");
+        stmt.run([name, phone, password, category_id], function(err) {
             callback(err, this);
         });
+        stmt.finalize();
     },
 
-    update(restaurant, callback) {
-        const { id, name, category, adress, phone, cnpj } = restaurant;
-        const stmt = db.prepare("UPDATE restaurants SET name = ?, category = ?, adress = ?, phone = ?, cnpj = ? WHERE id = ?");
-        stmt.run([name, category, adress, phone, cnpj, id], function(err) {
-            callback(err, this);
+    deleteById(id, callback) {
+        const stmt = db.prepare("DELETE FROM restaurants WHERE id = ?");
+        stmt.run([id], function(err) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, { changes: this.changes });
+            }
         });
+        stmt.finalize();
     },
 
-    delete(id, callback) {
-        const stmt = db.prepare("DELETE FROM restaurants WHERE id = ?", [id], callback);
+    update(id, restaurant, callback) {
+        const { name, phone, password, category_id, stars } = restaurant;
+        
+        let sql = "UPDATE restaurants SET ";
+        const updates = [];
+        const params = [];
+
+        if (name) {
+            updates.push("name = ?");
+            params.push(name);
+        }
+        if (phone) {
+            updates.push("phone = ?");
+            params.push(phone);
+        }
+        if (password) {
+            updates.push("password = ?");
+            params.push(password);
+        }
+        if (category_id) {
+            updates.push("category_id = ?");
+            params.push(category_id);
+        }
+        if (stars) {
+            updates.push("stars = ?");
+            params.push(stars);
+        }
+
+        if (updates.length === 0) {
+            return callback(new Error("No fields to update"), null);
+        }
+
+        sql += updates.join(", ") + " WHERE id = ?";
+        params.push(id);
+
+        db.run(sql, params, function(err) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, { changes: this.changes });
+            }
+        });
     }
 }

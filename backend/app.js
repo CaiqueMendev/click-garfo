@@ -5,8 +5,10 @@ const port = 3000;
 app.use(express.json());
 
 const usersRoutes = require('./routes/users');
+const restaurantsRoutes = require('./routes/restaurants');
 
 app.use('/users', usersRoutes);
+app.use('/restaurants', restaurantsRoutes);
 
 app.get('/', (req, res) => {
     res.send('API esta funcionando');
