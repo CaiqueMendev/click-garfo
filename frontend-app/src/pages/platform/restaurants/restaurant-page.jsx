@@ -1,5 +1,6 @@
 import { Header } from "../../../components/restaurants/c-header";
 import { AboutRestaurant } from "../../../components/restaurants/c-about-restaurant";
+import { MenuRestaurant } from "../../../components/restaurants/c-menu-restaurant";
 
 export default function RestaurantPage() {
     return (
@@ -9,7 +10,7 @@ export default function RestaurantPage() {
                 <img src="/caminho_imagem.jpg" alt="" className="w-full h-full rounded-2xl" />
             </div>
             <AboutRestaurant />
-                
+            <MenuRestaurant />
         </section>
     )
 }
