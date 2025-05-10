@@ -34,6 +34,8 @@ export function Header() {
           </button>
 
           {openSheetCart && (
+            <>
+            <div className="fixed inset-0 bg-black/30 z-40"></div>
             <div className="fixed top-0 right-0 z-50">
               <SidebarCart
                 title="Restaurante Exemplo"
@@ -46,6 +48,7 @@ export function Header() {
                 onClose={() => setOpenSheetCart(false)}
               />
             </div>
+            </>
           )}
 
           <h1 className="text-lg lg:text-xl font-semibold text-end">
