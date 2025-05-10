@@ -1,10 +1,12 @@
 import { X } from "lucide-react";
 
-export function SidebarCart({title, order, price, quantity, subtotal, total, total_value}) {
+export function SidebarCart({title, order, price, quantity, subtotal, total, total_value, onClose}) {
     return (
         <aside className="h-screen bg-white w-1/2 p-4 rounded-l-md relative">
             <div className="absolute top-4 right-4 bottom-0">
+                <button aria-label="Fechar carrinho" onClick={onClose}>
                 <X className="text-[#E67E22]" size={24} />
+                </button>
             </div>
             <div className="flex flex-col justify-between gap-2">
             <h6 className="font-light text-[#1B1B1B] text-sm lg:text-base">Seu pedido em</h6>
