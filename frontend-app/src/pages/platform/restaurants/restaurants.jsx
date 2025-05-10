@@ -1,7 +1,7 @@
 import { Heart, Star } from "lucide-react";
-import { CardRestaurant } from "../../components/restaurants/c-card-restaurant";
-import { dataRestaurantsFood } from "../../data/v-data";
-import { Header } from "../../components/restaurants/c-header";
+import { CardRestaurant } from "../../../components/restaurants/c-card-restaurant";
+import { dataRestaurantsFood } from "../../../data/v-data";
+import { Header } from "../../../components/restaurants/c-header";
 
 export default function Restaurants() {
     return (

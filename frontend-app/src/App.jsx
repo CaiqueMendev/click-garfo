@@ -3,9 +3,9 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import Home from "./pages/platform/home"
 import { MainLayout } from "./pages/platform/main"
-import Restaurants from "./pages/platform/restaurants"
 import { CartOrder } from "./pages/platform/CartOrder"
 import MyFavorites from "./pages/platform/favorites"
+import Restaurants from "./pages/platform/restaurants/restaurants"
 
 function App() {
 
