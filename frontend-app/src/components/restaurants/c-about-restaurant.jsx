@@ -1,3 +1,5 @@
+import { Star } from "lucide-react";
+
 export function AboutProfile() {
     return (
         <>
