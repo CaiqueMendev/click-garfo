@@ -44,7 +44,7 @@ export function RegisterForm() {
 
     try {
       const response = await axios
-        .post("/users/create", {
+        .post("http://localhost:3000/users/create", {
           email,
           name,
           phone_number,
