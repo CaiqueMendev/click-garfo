@@ -17,7 +17,7 @@ export function SidebarCart({
         onClick={onClose}
         className="absolute top-4 right-4"
       >
-        <X className="text-[#E67E22]" size={28} />
+        <X className="text-[#E67E22] cursor-pointer" size={28} />
       </button>
 
       <div className="flex flex-col h-full gap-6">
