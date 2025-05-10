@@ -56,7 +56,7 @@ export function SidebarCart({
           <p>R$ {total_value}</p>
         </div>
 
-        <button className="mt-auto w-full bg-[#E67E22] hover:bg-[#cf6c15] text-white font-medium py-3 rounded-md transition">
+        <button className="mt-auto w-full bg-[#E67E22] hover:bg-[#cf6c15] text-white font-medium py-3 rounded-md transition cursor-pointer">
           Confirmar o pedido
         </button>
       </div>
