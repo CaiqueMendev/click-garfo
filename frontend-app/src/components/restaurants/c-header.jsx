@@ -1,9 +1,10 @@
 import { Search, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { SidebarCart } from "../ui/c-sidebar-cart";
 
 export function Header() {
   const filterRestaurants = ["Tipo de restaurante", "Massas", "Carnes", "Hamburguer"];
-  const [/*openSheetCart*/, setOpenSheetCart] = useState(false);
+  const [openSheetCart, setOpenSheetCart] = useState(false);
 
   function searchRestaurants(event) {
     const value = event.target.value;
@@ -50,6 +51,23 @@ export function Header() {
           >
             <ShoppingCart size={24} className="text-[#E67E22]" />
           </button>
+          {openSheetCart && (
+            <>
+            <div className="fixed inset-0 bg-black/30 z-40"></div>
+            <div className="fixed top-0 right-0 z-50">
+              <SidebarCart
+                title="Restaurante Exemplo"
+                order="Pedido 1"
+                price="R$ 49,90"
+                quantity="1x"
+                subtotal="49,90"
+                total="5,00"
+                total_value="54,90"
+                onClose={() => setOpenSheetCart(false)}
+              />
+            </div>
+            </>
+          )}
         </div>
       </div>
     </header>
