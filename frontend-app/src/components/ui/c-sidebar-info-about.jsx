@@ -1,6 +1,6 @@
 export function SidebarAboutRestaurant() {
     return (
-        <aside className="h-screen bg-white w-1/2 p-4">
+        <aside className="h-screen bg-white w-1/2 p-4 rounded-l-md">
             <div className="flex flex-col gap-2">
              <p className="text-[#1B1B1B]/80 max-w-[300px] text-center lg:text-start">
              O melhor hambúrguer de Salvador. #burger #batatafrita #aioli #bacon #almoco #artesanal #executivo #lanche #cheddar #combo #smash #hamburger #artesanal #hamburgueria #hamburgueriaartesanal #crispy #bbq #chicken #frango #vegetariano #falafel #gorgonzola #maionese #picles #carne #queijo
