@@ -44,7 +44,7 @@ export function RegisterForm() {
 
     try {
       const response = await axios
-        .post("/api/de/caique", {
+        .post("/users/create", {
           email,
           name,
           phone_number,
