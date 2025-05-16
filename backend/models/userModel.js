@@ -9,6 +9,10 @@ module.exports = {
         db.get("SELECT * FROM users WHERE id = ?", [id], callback);
     },
 
+    findByEmail: (email, callback) => {
+        db.get('SELECT * FROM users WHERE email = ?', [email], callback);
+    },
+
     create(user, callback) {
         const { name, email, phone, password } = user;
         const stmt = db.prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");

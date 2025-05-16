@@ -1,4 +1,8 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+
+const SECRET = 'key';
 
 module.exports = {
     getAllUsers(req, res) {
@@ -22,10 +26,15 @@ module.exports = {
             return res.status(400).json({ message: "name, email, phone, and password are required." });
         }
 
-        User.create({ name, email, phone, password }, (err, result) => {
-            if (err) return res.status(500).json({ message: "Error creating user" });
-            res.status(201).json({ message: "User Created", userId: result.lastID });
-        });
+        bcrypt.hash(password, 10, (err, hashedPassword) => {
+            if (err) return res.status(500).json({ message: 'Error encrypting password.' });
+
+            User.create({ name, email, phone, password: hashedPassword }, (err, result) => {
+                if (err) return res.status(500).json({ message: "Error creating user" });
+                res.status(201).json({ message: "User Created", userId: result.lastID });
+            });
+        })
+
     },
 
     deleteUserById(req, res) {
@@ -46,16 +55,54 @@ module.exports = {
         const updateUser = {
             name: name || undefined,
             email: email || undefined,
-            phone: phone || undefined,
-            password: password || undefined
+            phone: phone || undefined
         };
 
-        User.update(id, updateUser, (err, result) => {
-            if (err) return res.status(500).json({ error: err.message });
-            if(result.changes === 0) {
-                return res.status(400).json({ message: "User not found or no fields updated" });
-            }
-            res.json({ message: "User updated", userId: id });
+        if (password) {
+            bcrypt.hash(password, 10, (err, hashedPassword) => {
+                if (err) return res.status(500).json({ message: 'Error encrypting password.' });
+
+                updateUser.password = hashedPassword;
+                
+                User.update(id, updateUser, (err, result) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    if(result.changes === 0) {
+                        return res.status(400).json({ message: "User not found or no fields updated" });
+                    }
+                    res.json({ message: "User updated", userId: id });
+                });
+            })
+        } else {
+            User.update(id, updateUser, (err, result) => {
+                if (err) return res.status(500).json({ error: err.message });
+                if (result.changes === 0) {
+                    return res.status(400).json({ message: "User not found or no fields updated" });
+                }
+                res.json({ message: "User updated", userId: id });
+            });
+        }
+
+    },
+
+    loginUser(req, res) {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'email and password are required.' });
+        }
+
+        User.findByEmail(email, (err, user) => {
+            if (err) return res.status(500).json({ message: 'Internal error.' });
+            if (!user) return res.status(401).json({ message: 'User not found.' });
+
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (result) {
+                    const token = jwt.sign({ id: user.id, email:user.email }, SECRET, { expiresIn: '1h' });
+                    return res.json({ message: 'Success', token });
+                } else {
+                    return res.status(401).json({ message: 'Wrong password.' });
+                }
+            });
         });
     }
 };

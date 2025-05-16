@@ -5,6 +5,7 @@ import { User, Lock, Mail, Phone } from "lucide-react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ export function RegisterForm() {
     .object({
       email: z.string().email("Insira um e-mail válido."),
       name: z.string().min(4, "Por favor preencha seu nome."),
-      phone_number: z.string().optional(),
+      phone: z.string().optional(),
       password: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres."),
       confirm_password: z
         .string()
@@ -32,24 +33,22 @@ export function RegisterForm() {
     defaultValues: {
       email: "",
       name: "",
-      phone_number: "",
       password: "",
       confirm_password: "",
     },
   });
 
   const onSubmit = async (data) => {
-    const { email, name, phone_number, password, confirm_password } = data;
+    const { email, name, phone, password } = data;
     setIsLoading(true);
 
     try {
       const response = await axios
-        .post("http://localhost:3000/users/create", {
+        .post(`${BACKEND_URL}users/create`, {
           email,
           name,
-          phone_number,
-          password,
-          confirm_password,
+          phone,
+          password
         })
         .then((res) => res.data);
 
@@ -114,7 +113,7 @@ export function RegisterForm() {
                 id="phone_number"
                 type="tel"
                 placeholder="+55 (99) 99999-9999"
-                {...form.register("phone_number")}
+                {...form.register("phone")}
                 className="flex-1 outline-none text-sm"
               />
               <Phone size={18} className="text-gray-400 ml-2" />

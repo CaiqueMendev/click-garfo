@@ -5,9 +5,10 @@ import { User, Lock } from "lucide-react";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config"
 
 const formSchema = z.object({
-  name: z
+  email: z
     .string()
     .min(4, "Por favor preencha este campo, o nome é obrigatório."),
   password: z.string().min(8, "Sua senha precisa ter no mínimo 8 caracteres."),
@@ -22,21 +23,21 @@ export function LoginForm() {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      email: "",
       password: "",
     },
   });
 
   const onSubmit = async (data) => {
-    const { name, password } = data;
+    const { email, password } = data;
     setIsLoading(true);
     try {
-      const response = await axios.post("api/rota/do/formulario", {
-        name,
+      const response = await axios.post(`${BACKEND_URL}users/login`, {
+        email,
         password,
       });
       console.log("Login feito com sucesso:", response.data);
-      setIsAceppted(`Olá ${name}! Bem-vindo à plataforma.`);
+      setIsAceppted(`Olá ${email}! Bem-vindo à plataforma.`);
       setTimeout(() => {
         navigate("/home")
       }, 2000)
@@ -60,12 +61,12 @@ export function LoginForm() {
           className="flex flex-col gap-4 mt-4"
         >
           <div className="flex flex-col gap-1">
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="email">E-mail</label>
             <div className="flex items-center border border-[#D9D9D9]/50 rounded-lg px-2 focus-within:border-[#E67E22] focus-within:ring-1 focus-within:ring-[#E67E22]">
               <input
                 type="text"
-                {...form.register("name")}
-                placeholder="Digite seu nome..."
+                {...form.register("email")}
+                placeholder="Digite seu email..."
                 className="p-2 outline-none text-sm w-full bg-transparent"
               />
               <User size={18} className="text-[#1b1b1b]/50" />
