@@ -1,4 +1,5 @@
 const Restaurant = require('../models/restaurantModel');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     getAllRestaurants(req, res) {
@@ -22,16 +23,20 @@ module.exports = {
             return res.status(400).json({ message: "name, phone, password and category_id are required." });
         }
 
-        Restaurant.create({ name, phone, password, category_id }, (err, result) => {
-            if (err) return res.status(500).json({ message: "Error creating Restaurant" });
-            res.status(201).json({ message: "Restaurant Created", restaurantId: result.lastID });
+        bcrypt.hash(password, 10, (err, hashedPassword) => {
+            if (err) return res.status(500).json({ message: 'Error encrypting password.' });
+
+            Restaurant.create({ name, phone, password: hashedPassword, category_id }, (err, result) => {
+                if (err) return res.status(500).json({ message: "Error creating Restaurant" });
+                res.status(201).json({ message: "Restaurant Created", restaurantId: result.lastID });
+            });
         });
     },
 
     deleteRestaurantById(req, res) {
         Restaurant.deleteById(req.params.id, (err) => {
             if (err) return res.status(500).json({ error: err.message });
-            res.status(201).json({ message: "Restaurant Deleted" });
+            res.status(200).json({ message: "Restaurant Deleted" });
         });
     },
 
@@ -46,17 +51,32 @@ module.exports = {
         const updateRestaurant = {
             name: name || undefined,
             phone: phone || undefined,
-            password: password || undefined, 
+            password: password || undefined,
             category_id: category_id || undefined,
-            stars : stars || undefined
+            stars: stars || undefined
         };
 
-        Restaurant.update(id, updateRestaurant, (err, result) => {
-            if (err) return res.status(500).json({ error: err.message });
-            if (result.changes === 0) {
-                return res.status(400).json({ message: "Restaurant not found or no fields updated" });
-            }
-            res.json({ message: "Restaurant updated", restaurantId: id });
-        });
+        if (password) {
+            bcrypt.hash(password, 10, (err, hashedPassword) => {
+                if (err) return res.status(500).json({ message: 'Error encrypting password.' });
+                updateRestaurant.password = hashedPassword;
+
+                Restaurant.update(id, updateRestaurant, (err, result) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    if (result.changes === 0) {
+                        return res.status(400).json({ message: "Restaurant not found or no fields updated" });
+                    }
+                    res.json({ message: "Restaurant updated", restaurantId: id });
+                });
+            });
+        } else {
+            Restaurant.update(id, updateRestaurant, (err, result) => {
+                if (err) return res.status(500).json({ error: err.message });
+                if (result.changes === 0) {
+                    return res.status(400).json({ message: "Restaurant not found or no fields updated" });
+                }
+                res.json({ message: "Restaurant updated", restaurantId: id });
+            });
+        }
     }
-}
+};
