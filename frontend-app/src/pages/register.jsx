@@ -32,6 +32,9 @@ export default function Register() {
           <RegisterForm />
         </div>
       </div>
+      <div>
+        aaaaaaaaa
+      </div>
       </div>
     </section>
   );
