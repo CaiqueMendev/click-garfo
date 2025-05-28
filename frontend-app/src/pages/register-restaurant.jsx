@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FormRestaurant } from "../components/ui/register-form-restaurant";
+import { FormRestaurant } from "../components/register-form-restaurant";
 import logo from "/logo.svg";
 import { ArrowLeft } from "lucide-react";
 
@@ -19,7 +19,7 @@ export default function RegisterRestaurant() {
                   </p>
                 </div>
               </figure>
-              <main className="flex flex-col justify-center items-start">
+              <main className="flex flex-col justify-center items-center">
                 <Link
             to="/register"
             className="flex items-center justify-center lg:justify-start gap-2 text-start"

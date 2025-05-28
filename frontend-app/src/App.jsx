@@ -7,6 +7,7 @@ import { CartOrder } from "./pages/platform/CartOrder"
 import MyFavorites from "./pages/platform/favorites"
 import Restaurants from "./pages/platform/restaurants/restaurants"
 import RegisterRestaurant from "./pages/register-restaurant"
+import LoginRestaurant from "./pages/login-restaurant"
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
           </MainLayout>
         }/>
         <Route path="/register-restaurant" element={<RegisterRestaurant />} />
+        <Route path="/login-restaurant" element={<LoginRestaurant />} />
         </Routes>
       </BrowserRouter>
     </>

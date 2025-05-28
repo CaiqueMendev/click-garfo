@@ -9,11 +9,11 @@ import { Link, useNavigate } from "react-router-dom";
 const formSchema = z.object({
   name: z
     .string()
-    .min(4, "Por favor preencha este campo, o nome é obrigatório."),
-  password: z.string().min(8, "Sua senha precisa ter no mínimo 8 caracteres."),
+    .min(4, "Por favor preencha este campo, o nome do restaurante é obrigatório."),
+  password: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres."),
 });
 
-export function LoginForm() {
+export function LoginFormRestaurant() {
   const [isLoading, setIsLoading] = useState(false);
   const [isAceppted, setIsAceppted] = useState("");
 
@@ -36,10 +36,10 @@ export function LoginForm() {
         password,
       });
       console.log("Login feito com sucesso:", response.data);
-      setIsAceppted(`Olá ${name}! Bem-vindo à plataforma.`);
+      setIsAceppted(`Restaurante ${name} logado com sucesso!`);
       setTimeout(() => {
-        navigate("/home")
-      }, 2000)
+        navigate("/home");
+      }, 2000);
     } catch (error) {
       console.error("Erro na requisição POST:", error);
     }
@@ -50,9 +50,9 @@ export function LoginForm() {
     <div className="p-8 md:p-0">
       <div className="bg-white w-full lg:w-[487px] p-8 rounded-xl border-1 border-[#D9D9D9] shadow-md mt-32">
         <div className="text-start flex flex-col gap-2">
-          <h1 className="text-[#1b1b1b] font-semibold text-3xl">Log in</h1>
+          <h1 className="text-[#1b1b1b] font-semibold text-3xl">Login para Restaurantes</h1>
           <p className="text-black/50 text-start text-sm">
-            Preencha os campos abaixo para entrar na plataforma.
+            Acesse sua conta de restaurante na plataforma.
           </p>
         </div>
         <form
@@ -60,12 +60,12 @@ export function LoginForm() {
           className="flex flex-col gap-4 mt-4"
         >
           <div className="flex flex-col gap-1">
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="name">Nome do Restaurante</label>
             <div className="flex items-center border border-[#D9D9D9]/50 rounded-lg px-2 focus-within:border-[#E67E22] focus-within:ring-1 focus-within:ring-[#E67E22]">
               <input
                 type="text"
                 {...form.register("name")}
-                placeholder="Digite seu nome..."
+                placeholder="Digite o nome do restaurante..."
                 className="p-2 outline-none text-sm w-full bg-transparent"
               />
               <User size={18} className="text-[#1b1b1b]/50" />
@@ -89,23 +89,18 @@ export function LoginForm() {
 
           <div className="w-full flex flex-col gap-3 mt-4">
             <button
-            disabled={isLoading}
+              disabled={isLoading}
               type="submit"
               className="w-full cursor-pointer bg-[#E67E22] rounded-lg text-white font-semibold py-2"
             >
               {isLoading ? "Carregando..." : "Entrar"}
             </button>
             <button className="w-full cursor-pointer bg-[#F5F5F5] rounded-lg text-[#1b1b1b] font-semibold border-1 border-[#D9D9D9] py-2">
-              <Link to="/register">Cadastrar-se</Link>
+              <Link to="/register-restaurant">Cadastrar restaurante</Link>
             </button>
             <p className="text-green-500 text-sm text-center">{isAceppted}</p>
           </div>
         </form>
-        <div className="flex items-center justify-center mt-4">
-          <Link className="text-gray-500 text-sm underline text-center transition-all duration-700 hover:text-orange-500" to="/login-restaurant">
-          Entrar como restaurante
-          </Link>
-        </div>
       </div>
     </div>
   );
