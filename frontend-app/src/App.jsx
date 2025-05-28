@@ -8,6 +8,7 @@ import MyFavorites from "./pages/platform/favorites"
 import Restaurants from "./pages/platform/restaurants/restaurants"
 import RegisterRestaurant from "./pages/register-restaurant"
 import LoginRestaurant from "./pages/login-restaurant"
+import OrderPage from "./pages/platform/order/order-page"
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         }/>
         <Route path="/register-restaurant" element={<RegisterRestaurant />} />
         <Route path="/login-restaurant" element={<LoginRestaurant />} />
+        <Route path="/order-page" element={<OrderPage />} />
         </Routes>
       </BrowserRouter>
     </>
