@@ -1,16 +1,20 @@
 import { ArrowLeft } from "lucide-react";
 import { OrderTable } from "../../../components/ui/c-order-table";
-import  { Link } from "react-router-dom"
+import  { Link } from "react-router-dom";
+import logo from "/Logo_secondary.svg";
 
 export default function OrderPage() {
     const typeOrder = ["Pendente", "Cancelado", "Em preparo", "Em entrega", "Entregue"];
 
     return (
-        <section className="mt-6 max-w-[1440px] mx-auto p-8 lg:p-0">
-            <Link to="/login-restaurant" className="flex items-center gap-2 mb-6">
+        <section className="max-w-[1440px] mx-auto p-8 lg:p-0">
+            <div className="flex items-center justify-center gap-2 lg:justify-between">
+                <Link to="/login-restaurant" className="flex items-center gap-2 mb-6">
             <ArrowLeft className="text-orange-500" />
             Voltar
             </Link>
+            <img src={logo} className="w-40 h-40" alt="" />
+            </div>
             <h1 className="text-2xl lg:text-3xl font-bold text-[#E67E22]">Pedidos</h1>
 
             <div className="mt-6 p-4">
