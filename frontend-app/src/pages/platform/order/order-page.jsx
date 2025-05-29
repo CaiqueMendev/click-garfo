@@ -57,7 +57,7 @@ export default function OrderPage() {
             className="bg-orange-100 border cursor-pointer border-orange-200 text-[#1B1B1B] px-6 py-2 rounded-lg hover:shadow-md transition-all duration-200 hover:bg-orange-200 active:scale-95"
           >
             <Link
-              to="/products-page"
+              to="/products-restaurant-page"
               className="flex items-center gap-2 text-sm lg:text-base font-semibold"
             >
               <Box className="text-[#E67E22]" />
