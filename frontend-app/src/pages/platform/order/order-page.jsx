@@ -17,7 +17,7 @@ export default function OrderPage() {
             </div>
             <h1 className="text-2xl lg:text-3xl font-bold text-[#E67E22]">Pedidos</h1>
 
-            <div className="mt-6 p-4">
+            <div className="p-4">
                 <h3 className="text-[#1B1B1B] text-xl mb-4 font-medium">Filtros</h3>
 
                 <div className="flex flex-col lg:flex-row flex-wrap gap-4">
