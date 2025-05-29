@@ -1,10 +1,16 @@
+import { ArrowLeft } from "lucide-react";
 import { OrderTable } from "../../../components/ui/c-order-table";
+import  { Link } from "react-router-dom"
 
 export default function OrderPage() {
     const typeOrder = ["Pendente", "Cancelado", "Em preparo", "Em entrega", "Entregue"];
 
     return (
         <section className="mt-6 max-w-[1440px] mx-auto p-8 lg:p-0">
+            <Link to="/login-restaurant" className="flex items-center gap-2 mb-6">
+            <ArrowLeft className="text-orange-500" />
+            Voltar
+            </Link>
             <h1 className="text-2xl lg:text-3xl font-bold text-[#E67E22]">Pedidos</h1>
 
             <div className="mt-6 p-4">
