@@ -46,6 +46,11 @@ export default function OrderPage() {
                             </option>
                         ))}
                     </select>
+                    <button className="bg-orange-100 p-2 rounded-md border border-orange-50 px-8 text-[#1B1B1B] font-medium text-sm lg:text-base" type="button">
+                        <Link className="flex items-center gap-2" to="/products-page">
+                            Produtos
+                        </Link>
+                    </button>
                 </div>
             </div>
 
