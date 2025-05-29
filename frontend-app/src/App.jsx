@@ -9,6 +9,7 @@ import Restaurants from "./pages/platform/restaurants/restaurants"
 import RegisterRestaurant from "./pages/register-restaurant"
 import LoginRestaurant from "./pages/login-restaurant"
 import OrderPage from "./pages/platform/order/order-page"
+import ProductPage from "./pages/platform/products/product-restaurant-page"
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
         <Route path="/register-restaurant" element={<RegisterRestaurant />} />
         <Route path="/login-restaurant" element={<LoginRestaurant />} />
         <Route path="/order-page" element={<OrderPage />} />
+        <Route path="/product-restaurant-page" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </>
