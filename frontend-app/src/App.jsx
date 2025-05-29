@@ -42,7 +42,7 @@ function App() {
         <Route path="/register-restaurant" element={<RegisterRestaurant />} />
         <Route path="/login-restaurant" element={<LoginRestaurant />} />
         <Route path="/order-page" element={<OrderPage />} />
-        <Route path="/product-restaurant-page" element={<ProductPage />} />
+        <Route path="/products-restaurant-page" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </>
