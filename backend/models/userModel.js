@@ -1,4 +1,4 @@
-const db = require('../database/database');
+const { db } = require('../database/database');
 
 module.exports = {
     getAll(callback) {
@@ -14,24 +14,37 @@ module.exports = {
     },
 
     create(user, callback) {
+        console.log('Modelo: Iniciando criação de usuário:', user);
         const { name, email, phone, password } = user;
-        const stmt = db.prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");
-        stmt.run([name, email, phone, password], function(err) {
-            callback(err, this);
+        
+        const sql = "INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)";
+        const params = [name, email, phone, password];
+        
+        console.log('Modelo: Executando SQL:', sql);
+        console.log('Modelo: Parâmetros:', params);
+        
+        db.run(sql, params, function(err) {
+            if (err) {
+                console.error('Modelo: Erro ao criar usuário:', err);
+                callback(err, null);
+            } else {
+                console.log('Modelo: Usuário criado com sucesso. ID:', this.lastID);
+                callback(null, this);
+            }
         });
-        stmt.finalize();
     },
 
     deleteById(id, callback) {
-        const stmt = db.prepare("DELETE FROM users WHERE id = ?");
-        stmt.run([id], function(err) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, { changes: this.changes });
+        db.run("DELETE FROM users WHERE id = ?",
+            [id],
+            function(err) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, { changes: this.changes });
+                }
             }
-        });
-        stmt.finalize();
+        );
     },
 
     update(id, user, callback) {

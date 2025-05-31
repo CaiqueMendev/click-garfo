@@ -2,21 +2,21 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Lock } from "lucide-react";
-import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../config"
+import api from "../services/api";
 
 const formSchema = z.object({
   email: z
     .string()
-    .min(4, "Por favor preencha este campo, o nome é obrigatório."),
+    .email("Por favor, insira um e-mail válido."),
   password: z.string().min(8, "Sua senha precisa ter no mínimo 8 caracteres."),
 });
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isAceppted, setIsAceppted] = useState("");
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -31,20 +31,36 @@ export function LoginForm() {
   const onSubmit = async (data) => {
     const { email, password } = data;
     setIsLoading(true);
+    setError("");
+    setSuccess("");
+
     try {
-      const response = await axios.post(`${BACKEND_URL}users/login`, {
+      console.log('Enviando requisição de login...');
+      const response = await api.post('/users/login', {
         email,
         password,
       });
-      console.log("Login feito com sucesso:", response.data);
-      setIsAceppted(`Olá ${email}! Bem-vindo à plataforma.`);
+
+      console.log('Resposta recebida:', response.data);
+
+      // Salvar o token no localStorage
+      localStorage.setItem('token', response.data.token);
+      
+      setSuccess(`Olá ${response.data.user.name}! Bem-vindo à plataforma.`);
       setTimeout(() => {
-        navigate("/home")
-      }, 2000)
+        navigate("/home");
+      }, 2000);
     } catch (error) {
-      console.error("Erro na requisição POST:", error);
+      console.error("Erro no login:", error);
+      console.error("Detalhes do erro:", {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message
+      });
+      setError(error.response?.data?.message || "Erro ao fazer login. Verifique suas credenciais.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -71,6 +87,9 @@ export function LoginForm() {
               />
               <User size={18} className="text-[#1b1b1b]/50" />
             </div>
+            {form.formState.errors.email && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
+            )}
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="password">Senha</label>
@@ -83,6 +102,9 @@ export function LoginForm() {
               />
               <Lock size={18} className="text-[#1b1b1b]/50" />
             </div>
+            {form.formState.errors.password && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
+            )}
             <p className="text-[#1b1b1b] text-end text-sm cursor-pointer">
               Esqueceu sua senha?
             </p>
@@ -90,7 +112,7 @@ export function LoginForm() {
 
           <div className="w-full flex flex-col gap-3 mt-4">
             <button
-            disabled={isLoading}
+              disabled={isLoading}
               type="submit"
               className="w-full cursor-pointer bg-[#E67E22] rounded-lg text-white font-semibold py-2"
             >
@@ -99,7 +121,8 @@ export function LoginForm() {
             <button className="w-full cursor-pointer bg-[#F5F5F5] rounded-lg text-[#1b1b1b] font-semibold border-1 border-[#D9D9D9] py-2">
               <Link to="/register">Cadastrar-se</Link>
             </button>
-            <p className="text-green-500 text-sm text-center">{isAceppted}</p>
+            {success && <p className="text-green-500 text-sm text-center">{success}</p>}
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           </div>
         </form>
       </div>

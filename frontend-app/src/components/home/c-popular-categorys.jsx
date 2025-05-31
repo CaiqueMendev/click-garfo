@@ -1,18 +1,39 @@
-export function PopularCategorys({ title, img }) {
-    return (
-      <div className="relative group transition-transform">
-        <div className="bg-white border-1 border-[#D9D9D9] p-2 rounded-xl flex flex-col gap-3 w-full group-hover:bg-[#E67E22] transition-colors duration-500">
-          <div className="flex items-center justify-center">
-          <img
-            src={img}
-            alt={title}
-            className="w-24 h-24 object-fit rounded-lg"
-          />
-          </div>
-          <h2 className="text-[#1b1b1b] font-medium text-xl text-center transition-all duration-500 group-hover:text-white">
-            {title}
-          </h2>
-        </div>
-      </div>
-    );
-  }
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import { Link } from "react-router-dom";
+
+export function PopularCategorys({ categories }) {
+  return (
+    <Swiper
+      spaceBetween={12}
+      slidesPerView={2}
+      breakpoints={{
+        320: { slidesPerView: 2 },    
+        480: { slidesPerView: 3 },     
+        640: { slidesPerView: 4 },  
+        768: { slidesPerView: 5 },    
+        1024: { slidesPerView: 6 },    
+        1280: { slidesPerView: 7 },  
+        1536: { slidesPerView: 8 },    
+      }}
+      modules={[Pagination]}
+    >
+      {categories.map((category) => (
+        <SwiperSlide key={category.id}>
+          <Link to={`/category/${category.id}`} className="flex flex-col items-center gap-2 cursor-pointer">
+            <div className="w-16 h-16 rounded-full bg-[#F5F5F5] flex items-center justify-center">
+              <img
+                src={category.photo || "/hamburguer.svg"}
+                alt={category.title}
+                className="w-8 h-8"
+              />
+            </div>
+            <span className="text-sm text-[#1b1b1b]">{category.title}</span>
+          </Link>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
+}

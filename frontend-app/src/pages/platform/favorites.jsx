@@ -1,14 +1,36 @@
 import { Header } from "../../components/favorites/c-header";
-import { dataOrderFood, dataRestaurantsFood } from "../../data/v-data";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { CardRequests } from "../../components/favorites/c-card-requests";
 import { CardRestaurant } from "../../components/favorites/c-card-restaurant";
-import { Heart, Star, ShoppingCart } from "lucide-react";
+import { Heart, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import api from "../../services/api";
 
 export default function MyFavorites() {
+  const [favoriteRestaurants, setFavoriteRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const response = await api.get('/favorites/restaurants');
+        setFavoriteRestaurants(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar restaurantes favoritos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <main className="max-w-[1400px] mx-auto p-8 lg:p-0 mt-8 lg:mt-0">
       <div className="mt-8 mb-8">
@@ -17,7 +39,7 @@ export default function MyFavorites() {
 
       <div>
         <h1 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-2">
-          Restaurantes
+          Restaurantes Favoritos
         </h1>
 
         <Swiper
@@ -33,49 +55,20 @@ export default function MyFavorites() {
           }}
           modules={[Pagination]}
         >
-          {dataRestaurantsFood.map((item, index) => (
-            <SwiperSlide key={index}>
+          {favoriteRestaurants.map((restaurant) => (
+            <SwiperSlide key={restaurant.id}>
               <CardRestaurant
-                img={item.img}
-                title={item.title}
-                description={item.description}
+                img={restaurant.photo}
+                title={restaurant.name}
+                description={restaurant.description}
                 stars={<Star size={24} color="#E67E22" />}
-                btnText={item.btnText}
+                btnText="Ver restaurante"
                 heart={<Heart size={24} color="#E67E22" />}
-                link={item.link}
+                link={`/restaurant/${restaurant.id}`}
               />
             </SwiperSlide>
           ))}
         </Swiper>
-
-        <section className="mt-8">
-          <h2 className="font-semibold text-2xl lg:text-3xl text-[#E67E22] mb-4">
-            Pedidos Favoritos
-          </h2>
-
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              1024: { slidesPerView: 3 },
-            }}
-            modules={[Pagination]}
-          >
-            {dataOrderFood.map((item, index) => (
-              <SwiperSlide key={index}>
-                <CardRequests
-                  like={<Heart size={36} />}
-                  img={item.img}
-                  title={item.title}
-                  description={item.description}
-                  price={item.price}
-                  icon={<ShoppingCart size={32} />}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </section>
       </div>
     </main>
   );

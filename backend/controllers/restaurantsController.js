@@ -17,6 +17,20 @@ module.exports = {
         });
     },
 
+    getPopularRestaurants(req, res) {
+        Restaurant.getPopular((err, rows) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json(rows);
+        });
+    },
+
+    getRestaurantsByCategory(req, res) {
+        Restaurant.getByCategory(req.params.categoryId, (err, rows) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json(rows);
+        });
+    },
+
     createRestaurant(req, res) {
         const { name, phone, password, category_id } = req.body;
         if (!name || !phone || !password || !category_id) {
@@ -78,5 +92,26 @@ module.exports = {
                 res.json({ message: "Restaurant updated", restaurantId: id });
             });
         }
+    },
+
+    getRestaurantProducts(req, res) {
+        Restaurant.getProducts(req.params.id, (err, rows) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json(rows);
+        });
+    },
+
+    getFavoriteRestaurants(req, res) {
+        Restaurant.getFavorites(req.user.id, (err, rows) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json(rows);
+        });
+    },
+
+    toggleFavorite(req, res) {
+        Restaurant.toggleFavorite(req.user.id, req.params.id, (err, result) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ message: result.isFavorite ? "Restaurante adicionado aos favoritos" : "Restaurante removido dos favoritos" });
+        });
     }
 };
