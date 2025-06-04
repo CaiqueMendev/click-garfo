@@ -1,32 +1,39 @@
-
-
-export function CardRequests({title, img, description, price, icon, like}) {
-
-    function handleFavoriteFood(event) {
-        const value = event.target.value;
-        console.log(value);
-    }
-
-    return (
-        <div className="bg-white rounded-xl p-6">
-  <div className="flex flex-col gap-4">
-    <div className="relative">
-      <div className="absolute top-4 bottom-0 right-4">
-        <button onClick={handleFavoriteFood} className="text-white font-medium">{like}</button>
+export function CardRequests({ like, img, title, description, price, icon, onAddToCart, onLikeClick }) {
+  return (
+    <div className="relative group transition-transform">
+      <div className="bg-white border-1 border-[#D9D9D9] p-4 rounded-xl flex flex-col gap-3 w-full group-hover:bg-[#E67E22] transition-colors duration-500">
+        <div className="absolute top-2 right-2">
+          <button onClick={onLikeClick}>
+            {like}
+          </button>
+        </div>
+        <div className="flex items-center justify-center">
+          <img
+            src={img}
+            alt={title}
+            className="w-24 h-24 object-fit rounded-lg"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-[#1b1b1b] font-medium text-xl text-center transition-all duration-500 group-hover:text-white">
+            {title}
+          </h2>
+          <p className="text-[#1b1b1b]/50 text-sm text-center transition-all duration-500 group-hover:text-white">
+            {description}
+          </p>
+          <div className="flex items-center justify-between">
+            <span className="text-[#E67E22] font-semibold text-lg transition-all duration-500 group-hover:text-white">
+              {price}
+            </span>
+            <button 
+              onClick={onAddToCart}
+              className="bg-[#E67E22] p-2 rounded-lg transition-all duration-500 group-hover:bg-white"
+            >
+              {icon}
+            </button>
+          </div>
+        </div>
       </div>
-      <img src={img} alt="Food Request Photo" className="w-full h-52 object-cover rounded-md" />
     </div>
-    <article className="flex flex-col justify-start gap-4">
-      <h1 className="text-xl text-[#1b1b1b] font-semibold">{title}</h1>
-      <p className="text-start text-gray-500 text-sm lg:text-base max-w-[300px]">{description}</p>
-      <div className="flex items-center justify-between gap-6">
-        <h3 className="font-bold text-[#E67E22] text-xl lg:text-3xl">{price}</h3>
-        <button className="bg-[#E67E22] rounded-md p-2">
-          <p className="text-white">{icon}</p>
-        </button>
-      </div>
-    </article>
-  </div>
-</div>
-    )
+  );
 }

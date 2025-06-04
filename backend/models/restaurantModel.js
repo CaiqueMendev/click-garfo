@@ -1,12 +1,54 @@
-const db = require('../database/database');
+const { db } = require('../database/database');
 
 module.exports = {
     getAll(callback) {
-        db.all("SELECT * FROM restaurants", callback);
+        const sql = `
+            SELECT r.*, c.title as category_name, c.photo as category_photo,
+                   (SELECT COUNT(*) FROM products WHERE restaurant_id = r.id) as products_count,
+                   (SELECT AVG(rating) FROM restaurant_ratings WHERE restaurant_id = r.id) as average_rating
+            FROM restaurants r
+            LEFT JOIN categories c ON r.category_id = c.id
+            ORDER BY r.stars DESC, average_rating DESC
+        `;
+        db.all(sql, callback);
     },
 
     getById(id, callback) {
-        db.get("SELECT * FROM restaurants WHERE id = ?", [id], callback);
+        const sql = `
+            SELECT r.*, c.title as category_name, c.photo as category_photo,
+                   (SELECT COUNT(*) FROM products WHERE restaurant_id = r.id) as products_count,
+                   (SELECT AVG(rating) FROM restaurant_ratings WHERE restaurant_id = r.id) as average_rating
+            FROM restaurants r
+            LEFT JOIN categories c ON r.category_id = c.id
+            WHERE r.id = ?
+        `;
+        db.get(sql, [id], callback);
+    },
+
+    getPopular(callback) {
+        const sql = `
+            SELECT r.*, c.title as category_name, c.photo as category_photo,
+                   (SELECT COUNT(*) FROM products WHERE restaurant_id = r.id) as products_count,
+                   (SELECT AVG(rating) FROM restaurant_ratings WHERE restaurant_id = r.id) as average_rating
+            FROM restaurants r
+            LEFT JOIN categories c ON r.category_id = c.id
+            ORDER BY r.stars DESC, average_rating DESC
+            LIMIT 10
+        `;
+        db.all(sql, callback);
+    },
+
+    getByCategory(categoryId, callback) {
+        const sql = `
+            SELECT r.*, c.title as category_name, c.photo as category_photo,
+                   (SELECT COUNT(*) FROM products WHERE restaurant_id = r.id) as products_count,
+                   (SELECT AVG(rating) FROM restaurant_ratings WHERE restaurant_id = r.id) as average_rating
+            FROM restaurants r
+            LEFT JOIN categories c ON r.category_id = c.id
+            WHERE r.category_id = ?
+            ORDER BY r.stars DESC, average_rating DESC
+        `;
+        db.all(sql, [categoryId], callback);
     },
 
     create(restaurant, callback) {
@@ -70,6 +112,53 @@ module.exports = {
                 callback(err, null);
             } else {
                 callback(null, { changes: this.changes });
+            }
+        });
+    },
+
+    getProducts(restaurantId, callback) {
+        const sql = `
+            SELECT p.*, c.title as category_name
+            FROM products p
+            LEFT JOIN categories c ON p.category_id = c.id
+            WHERE p.restaurant_id = ?
+        `;
+        db.all(sql, [restaurantId], callback);
+    },
+
+    getFavorites(userId, callback) {
+        const sql = `
+            SELECT r.*, c.title as category_name,
+                   (SELECT COUNT(*) FROM products WHERE restaurant_id = r.id) as products_count,
+                   (SELECT AVG(rating) FROM restaurant_ratings WHERE restaurant_id = r.id) as average_rating
+            FROM restaurants r
+            LEFT JOIN categories c ON r.category_id = c.id
+            INNER JOIN favorites f ON r.id = f.restaurant_id
+            WHERE f.user_id = ?
+        `;
+        db.all(sql, [userId], callback);
+    },
+
+    toggleFavorite(userId, restaurantId, callback) {
+        // Primeiro, verifica se já é favorito
+        const checkSql = 'SELECT * FROM favorites WHERE user_id = ? AND restaurant_id = ?';
+        db.get(checkSql, [userId, restaurantId], (err, row) => {
+            if (err) return callback(err);
+
+            if (row) {
+                // Se já é favorito, remove
+                const deleteSql = 'DELETE FROM favorites WHERE user_id = ? AND restaurant_id = ?';
+                db.run(deleteSql, [userId, restaurantId], function(err) {
+                    if (err) return callback(err);
+                    callback(null, { isFavorite: false });
+                });
+            } else {
+                // Se não é favorito, adiciona
+                const insertSql = 'INSERT INTO favorites (user_id, restaurant_id) VALUES (?, ?)';
+                db.run(insertSql, [userId, restaurantId], function(err) {
+                    if (err) return callback(err);
+                    callback(null, { isFavorite: true });
+                });
             }
         });
     }

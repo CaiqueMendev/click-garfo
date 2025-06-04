@@ -2,19 +2,21 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Lock, Mail, Phone } from "lucide-react";
-import axios from "axios";
 import { useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
+
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCreated, setIsCreated] = useState("");
+  const [error, setError] = useState("");
 
   const formSchema = z
     .object({
       email: z.string().email("Insira um e-mail válido."),
       name: z.string().min(4, "Por favor preencha seu nome."),
-      phone_number: z.string().optional(),
+      phone: z.string().optional(),
       password: z.string().min(8, "A senha precisa ter no mínimo 8 caracteres."),
       confirm_password: z
         .string()
@@ -32,38 +34,39 @@ export function RegisterForm() {
     defaultValues: {
       email: "",
       name: "",
-      phone_number: "",
       password: "",
       confirm_password: "",
     },
   });
 
   const onSubmit = async (data) => {
-    const { email, name, phone_number, password, confirm_password } = data;
+    const { email, name, phone, password } = data;
     setIsLoading(true);
+    setError("");
 
     try {
-      const response = await axios
-        .post("http://localhost:3000/users/create", {
-          email,
-          name,
-          phone_number,
-          password,
-          confirm_password,
-        })
-        .then((res) => res.data);
+      const response = await api.post('/users/create', {
+        email,
+        name,
+        phone,
+        password
+      });
 
-      console.log("Cadastro feito com sucesso!", response);
+      // Salvar o token no localStorage
+      localStorage.setItem('token', response.data.token);
+      
       setIsCreated(`Parabéns ${name}, obrigado por escolher a nossa plataforma!`);
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/home");
       }, 2000);
     } catch (error) {
       console.error("Erro na requisição da API", error);
+      const errorMessage = error.response?.data?.message || "Erro ao realizar cadastro. Tente novamente.";
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -89,6 +92,9 @@ export function RegisterForm() {
               />
               <Mail size={18} className="text-gray-400 ml-2" />
             </div>
+            {form.formState.errors.email && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
+            )}
           </div>
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -104,6 +110,9 @@ export function RegisterForm() {
               />
               <User size={18} className="text-gray-400 ml-2" />
             </div>
+            {form.formState.errors.name && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.name.message}</p>
+            )}
           </div>
           <div>
             <label htmlFor="phone_number" className="block text-sm font-medium text-gray-700">
@@ -114,11 +123,14 @@ export function RegisterForm() {
                 id="phone_number"
                 type="tel"
                 placeholder="+55 (99) 99999-9999"
-                {...form.register("phone_number")}
+                {...form.register("phone")}
                 className="flex-1 outline-none text-sm"
               />
               <Phone size={18} className="text-gray-400 ml-2" />
             </div>
+            {form.formState.errors.phone && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.phone.message}</p>
+            )}
           </div>
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -134,6 +146,9 @@ export function RegisterForm() {
               />
               <Lock size={18} className="text-gray-400 ml-2" />
             </div>
+            {form.formState.errors.password && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
+            )}
           </div>
           <div>
             <label htmlFor="confirm_password" className="block text-sm font-medium text-gray-700">
@@ -149,6 +164,9 @@ export function RegisterForm() {
               />
               <Lock size={18} className="text-gray-400 ml-2" />
             </div>
+            {form.formState.errors.confirm_password && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirm_password.message}</p>
+            )}
           </div>
           <div>
             <button
@@ -160,6 +178,9 @@ export function RegisterForm() {
             </button>
             {isCreated && (
               <p className="text-sm text-green-600 text-center mt-2">{isCreated}</p>
+            )}
+            {error && (
+              <p className="text-sm text-red-600 text-center mt-2">{error}</p>
             )}
           </div>
         </form>
