@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Lock, Mail, Phone } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+
+import { Link, useNavigate } from "react-router-dom";
+
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -183,6 +184,11 @@ export function RegisterForm() {
             )}
           </div>
         </form>
+        <div className="flex justify-center items-center mt-6">
+            <Link className="text-gray-500 underline text-sm hover:text-orange-500 transition-all duration-700" to="/register-restaurant">
+              Tem um restaurante e deseja cadastrar?
+            </Link>
+        </div>
       </div>
     </section>
   );
