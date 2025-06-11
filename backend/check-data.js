@@ -1,5 +1,8 @@
 const { db } = require('./database/database');
 
+
+//TESTE DE COMMIT
+
 async function checkData() {
     console.log('Verificando dados no banco...\n');
 
