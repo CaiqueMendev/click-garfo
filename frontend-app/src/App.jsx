@@ -11,7 +11,7 @@ import LoginRestaurant from "./pages/login-restaurant"
 import OrderPage from "./pages/platform/order/order-page"
 import ProductPage from "./pages/platform/products/product-restaurant-page"
 
-function App() {
+export default function App() {
 
   return (
     <>
@@ -49,4 +49,3 @@ function App() {
   )
 }
 
-export default App

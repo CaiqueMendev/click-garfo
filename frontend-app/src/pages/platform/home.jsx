@@ -9,7 +9,6 @@ import { CardRequests } from "../../components/home/c-card-requests";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { SalesOff } from "../../components/home/c-sales-off";
 import { useEffect, useState } from "react";
-import api from "../../services/api";
 import { restaurantService } from "../../services/restaurant";
 import { productService } from "../../services/product";
 import { categoryService } from "../../services/category";
@@ -18,8 +17,6 @@ import { CardRestaurant } from "../../components/favorites/c-card-restaurant";
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
-  const [salesOff, setSalesOff] = useState([]);
-  const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -41,16 +38,12 @@ export default function Home() {
         setPopularProducts(productsResponse);
 
         // Buscar ofertas
-        console.log('Buscando ofertas...');
-        const salesResponse = await productService.getSales();
-        console.log('Ofertas recebidas:', salesResponse);
-        setSalesOff(salesResponse);
+
 
         // Buscar restaurantes populares
         console.log('Buscando restaurantes populares...');
         const restaurantsResponse = await restaurantService.getPopular();
         console.log('Restaurantes populares recebidos:', restaurantsResponse);
-        setRestaurants(restaurantsResponse);
 
         setError(null);
       } catch (error) {
@@ -96,73 +89,16 @@ export default function Home() {
         </div>
 
         <div>
-          <h1 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-2">
+          <h1 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-6">
             Categorias Populares
           </h1>
           <PopularCategorys categories={categories} />
         </div>
 
-        <div>
-          <h2 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-2">
-            Restaurantes em Destaque
-          </h2>
-          <Swiper
-            spaceBetween={8}
-            slidesPerView={2}
-            breakpoints={{
-              320: { slidesPerView: 1 },
-              480: { slidesPerView: 2 },
-              640: { slidesPerView: 2.5 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 3 },
-              1280: { slidesPerView: 4 },
-            }}
-            modules={[Pagination]}
-          >
-            {restaurants.map((restaurant) => (
-              <SwiperSlide key={restaurant.id}>
-                <CardRestaurant
-                  img={restaurant.photo}
-                  title={restaurant.name}
-                  description={restaurant.description}
-                  stars={<Star size={24} color="#E67E22" />}
-                  btnText="Ver restaurante"
-                  heart={<Heart size={24} color="#E67E22" />}
-                  link={`restaurant/${restaurant.id}`}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
 
         <div>
-          <h2 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-2">
-            Ofertas Especiais
-          </h2>
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              1024: { slidesPerView: 3 },
-            }}
-            modules={[Pagination]}
-          >
-            {salesOff.map((item) => (
-              <SwiperSlide key={item.id}>
-                <SalesOff
-                  img={item.photo}
-                  title={item.title}
-                  description={item.description}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <div>
-          <h2 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-2">
-            Produtos Populares
+          <h2 className="text-2xl lg:text-3xl text-start text-[#E67E22] font-semibold mb-6">
+            Mais Pedidos
           </h2>
           <Swiper
             spaceBetween={20}

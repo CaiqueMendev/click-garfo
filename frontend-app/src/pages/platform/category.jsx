@@ -60,7 +60,7 @@ export default function Category() {
         {restaurants.map((restaurant) => (
           <CardRestaurant
             key={restaurant.id}
-            img={restaurant.photo}
+            img={restaurant.img}
             title={restaurant.name}
             description={restaurant.description}
             link={`/restaurant/${restaurant.id}`}
