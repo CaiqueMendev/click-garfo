@@ -18,7 +18,11 @@ const port = process.env.PORT || 3000;
 console.log('Iniciando servidor...');
 
 // Configuração do CORS
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // URL do frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(bodyParser.json());
 
@@ -45,25 +49,13 @@ app.use('/order-categories', orderCategoryRoutes);
 app.use('/payment-methods', paymentMethodRoutes);
 app.use('/categories', categoryRoutes);
 
-// Inicializar banco de dados e iniciar servidor
-async function startServer() {
-    try {
-        console.log('Inicializando banco de dados...');
-        await initializeDatabase();
-        console.log('Banco de dados inicializado com sucesso!');
-
-        // Iniciar servidor apenas se não estiver em ambiente de teste
-        if (process.env.NODE_ENV !== 'test') {
-            app.listen(port, () => {
-                console.log(`Servidor rodando na porta ${port}`);
-            });
-        }
-    } catch (error) {
-        console.error('Erro ao inicializar servidor:', error);
-        process.exit(1);
-    }
-}
-
-startServer();
+// Inicializar banco de dados
+initializeDatabase().then(() => {
+    app.listen(port, () => {
+        console.log(`Servidor rodando na porta ${port}`);
+    });
+}).catch(err => {
+    console.error('Erro ao inicializar banco de dados:', err);
+});
 
 module.exports = app;

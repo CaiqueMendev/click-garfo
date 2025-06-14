@@ -38,7 +38,7 @@ function getMock(url) {
         return restaurant || {};
     }
     if (path === '/cart') return mockResponses.cart;
-    if (path === '/orders/my-orders') return mockResponses.orders;
+    if (path === '/orders') return mockResponses.orders;
     if (path.startsWith('/ratings/restaurant/')) return mockResponses.ratings;
     if (path === '/users/login') return mockResponses.login;
     if (path === '/cart/add') return { id: 1 };

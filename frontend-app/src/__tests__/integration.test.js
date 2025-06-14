@@ -33,7 +33,7 @@ describe('Testes de Integração', () => {
     });
 
     test('Listar itens do carrinho', async () => {
-        const cart = await cartService.getCart();
+        const cart = await cartService.getItems();
         expect(Array.isArray(cart)).toBe(true);
     });
 
@@ -45,12 +45,12 @@ describe('Testes de Integração', () => {
             paymentMethod: 'credit-card',
             categoryId: 1
         };
-        const order = await orderService.createOrder(orderData);
+        const order = await orderService.create(orderData);
         expect(order).toHaveProperty('id');
     });
 
     test('Listar pedidos do usuário', async () => {
-        const orders = await orderService.getMyOrders();
+        const orders = await orderService.getOrders();
         expect(Array.isArray(orders)).toBe(true);
     });
 

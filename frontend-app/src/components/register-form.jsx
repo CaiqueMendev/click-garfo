@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Lock, Mail, Phone } from "lucide-react";
 import { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
+import { authService } from "../services/auth";
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,25 +42,26 @@ export function RegisterForm() {
     const { email, name, phone, password } = data;
     setIsLoading(true);
     setError("");
+    setIsCreated("");
 
     try {
-      const response = await api.post('/users/create', {
+      const response = await authService.register({
         email,
         name,
         phone,
         password
       });
-
-      // Salvar o token no localStorage
-      localStorage.setItem('token', response.data.token);
       
-      setIsCreated(`Parabéns ${name}, obrigado por escolher a nossa plataforma!`);
-
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+      if (response.token) {
+        setIsCreated(`Parabéns ${name}, obrigado por escolher a nossa plataforma!`);
+        setTimeout(() => {
+          navigate("/home");
+        }, 2000);
+      } else {
+        setError("Erro ao realizar cadastro. Tente novamente.");
+      }
     } catch (error) {
-      console.error("Erro na requisição da API", error);
+      console.error("Erro no registro:", error);
       const errorMessage = error.response?.data?.message || "Erro ao realizar cadastro. Tente novamente.";
       setError(errorMessage);
     } finally {
@@ -78,24 +78,18 @@ export function RegisterForm() {
         </p>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              E-mail
-            </label>
-            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 mt-1 focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
-              <input
-                id="email"
-                type="email"
-                placeholder="exemplo@email.com"
-                {...form.register("email")}
-                className="flex-1 outline-none text-sm"
-              />
-              <Mail size={18} className="text-gray-400 ml-2" />
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+              <span className="block sm:inline">{error}</span>
             </div>
-            {form.formState.errors.email && (
-              <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
-            )}
-          </div>
+          )}
+          
+          {isCreated && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+              <span className="block sm:inline">{isCreated}</span>
+            </div>
+          )}
+
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Nome
@@ -112,6 +106,24 @@ export function RegisterForm() {
             </div>
             {form.formState.errors.name && (
               <p className="text-red-500 text-sm mt-1">{form.formState.errors.name.message}</p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              E-mail
+            </label>
+            <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 mt-1 focus-within:border-orange-500 focus-within:ring-1 focus-within:ring-orange-500">
+              <input
+                id="email"
+                type="email"
+                placeholder="exemplo@email.com"
+                {...form.register("email")}
+                className="flex-1 outline-none text-sm"
+              />
+              <Mail size={18} className="text-gray-400 ml-2" />
+            </div>
+            {form.formState.errors.email && (
+              <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
             )}
           </div>
           <div>
@@ -176,12 +188,6 @@ export function RegisterForm() {
             >
               {isLoading ? "Cadastrando..." : "Cadastrar-se"}
             </button>
-            {isCreated && (
-              <p className="text-sm text-green-600 text-center mt-2">{isCreated}</p>
-            )}
-            {error && (
-              <p className="text-sm text-red-600 text-center mt-2">{error}</p>
-            )}
           </div>
         </form>
         <div className="flex justify-center items-center mt-6">
