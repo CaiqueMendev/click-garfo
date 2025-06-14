@@ -12,7 +12,7 @@ router.get('/restaurant/:restaurantId', productsController.getProductsByRestaura
 router.get('/:id', productsController.getProductById);
 
 // Rotas protegidas
-router.post('/', authMiddleware, productsController.createProduct);
+router.post('/create', productsController.createProduct);
 router.put('/:id', authMiddleware, productsController.updateProduct);
 router.delete('/:id', authMiddleware, productsController.deleteProductById);
 

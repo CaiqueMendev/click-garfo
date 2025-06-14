@@ -77,8 +77,16 @@ module.exports = {
     },
 
     create(product, callback) {
-        const { title, subtitle, description, photo, price, category_id, restaurant_id } = product;
+
+        let { title, subtitle, description, photo, price, category_id, restaurant_id } = product;
         const stmt = db.prepare("INSERT INTO products (title, subtitle, description, photo, price, category_id, restaurant_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        
+        switch (product.photo){
+            case "CAFÉ":
+                photo = "/Cafe&Cia.svg"
+                break;
+        }
+            
         stmt.run([title, subtitle, description, photo, price, category_id, restaurant_id], function(err) {
             callback(err, this);
         });

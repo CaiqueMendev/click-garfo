@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // Importe o módulo 'path'
 const userRoutes = require('./routes/users');
 const restaurantRoutes = require('./routes/restaurants');
 const productRoutes = require('./routes/products');
@@ -32,13 +33,17 @@ app.use((req, res, next) => {
     next();
 });
 
-// Middleware para tratamento de erros
-app.use((err, req, res, next) => {
-    console.error('Erro:', err);
-    res.status(500).json({ error: 'Erro interno do servidor' });
-});
+// --- Middleware para servir arquivos estáticos (ADICIONADO AQUI!) ---
+app.use(express.static(path.join(__dirname, '../frontend-app/public')));
+// Se o seu frontend também estiver servindo a pasta 'public'
+// e você quer que o backend sirva APENAS as imagens específicas do backend,
+// pode ser uma boa ideia dar um prefixo para as imagens:
+// app.use('/images', express.static(path.join(__dirname, '../frontend-app/public')));
+// Nesse caso, a URL seria: /images/Cafe&Cia.svg
+// Mas para o seu caso de '/Cafe&Cia.svg', a primeira opção é a correta.
+// --------------------------------------------------------------------
 
-// Rotas
+// Rotas da sua API
 app.use('/users', userRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/products', productRoutes);
@@ -49,7 +54,13 @@ app.use('/order-categories', orderCategoryRoutes);
 app.use('/payment-methods', paymentMethodRoutes);
 app.use('/categories', categoryRoutes);
 
-// Inicializar banco de dados
+// Middleware para tratamento de erros (coloque depois das rotas para pegar erros das rotas também)
+app.use((err, req, res, next) => {
+    console.error('Erro:', err);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+});
+
+// Inicializar banco de dados e iniciar o servidor
 initializeDatabase().then(() => {
     app.listen(port, () => {
         console.log(`Servidor rodando na porta ${port}`);
@@ -58,4 +69,4 @@ initializeDatabase().then(() => {
     console.error('Erro ao inicializar banco de dados:', err);
 });
 
-module.exports = app;
+module.exports = app; // Continue exportando a instância única de 'app'
